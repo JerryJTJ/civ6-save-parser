@@ -13,7 +13,7 @@ import {
 	MARKERS,
 	DATA_TYPES,
 	deleteChunk,
-} from "../index.js";
+} from "../parse.js";
 
 describe("Modify civtype2 save", function () {
 	const buffer = Buffer.from(readFileSync("test/saves/civtype2.Civ6Save"));

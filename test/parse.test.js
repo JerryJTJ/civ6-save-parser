@@ -4,7 +4,7 @@
 
 import { readFileSync, readdirSync } from "fs";
 import { expect } from "chai";
-import { parse } from "../index.js";
+import { parse } from "../parse.js";
 
 describe("Parse Cathy Save", () => {
 	const files = [

@@ -1,16 +1,15 @@
-[![Build Status](https://travis-ci.org/pydt/civ6-save-parser.svg?branch=master)](https://travis-ci.org/pydt/civ6-save-parser)
-
 # Civ 6 Save File Parser
 
-Maintained by the creators of [playyourdamnturn.com](https://www.playyourdamnturn.com).
+This is a fork of the [civ6-save-parser](https://github.com/pydt/civ6-save-parser) with some updates and additional functionality.
 
 Usage: `node index.js filename.Civ6Save [OPTIONS]`
 
 ## Options
 
-* **--outputCompressed**: Writes the compressed payload to the working directory.
-* **--simple**: Just outputs the parsed information, no metadata.
+-   **--outputCompressed**: Writes the compressed payload to the working directory.
+-   **--simple**: Just outputs the parsed information, no metadata.
+-   **--clean**: Outputs the very basic information in a JSON format.
 
-## Use as Module
+## Tests
 
-See tests for module usage, docs will come as the API stabilizes
+Tests are written in Mocha and can be run using `npm run test`.

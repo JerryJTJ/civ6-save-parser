@@ -24,49 +24,49 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 const { encode } = pkg;
-const START_ACTOR = new Buffer([0x58, 0xba, 0x7f, 0x4c]);
-const ZLIB_HEADER = new Buffer([0x78, 0x9c]);
-const END_UNCOMPRESSED = new Buffer([0, 0, 1, 0]);
-const COMPRESSED_DATA_END = new Buffer([0, 0, 0xff, 0xff]);
+const START_ACTOR = Buffer.from([0x58, 0xba, 0x7f, 0x4c]);
+const ZLIB_HEADER = Buffer.from([0x78, 0x9c]);
+const END_UNCOMPRESSED = Buffer.from([0, 0, 1, 0]);
+const COMPRESSED_DATA_END = Buffer.from([0, 0, 0xff, 0xff]);
 
 const GAME_DATA = {
-	GAME_TURN: new Buffer([0x9d, 0x2c, 0xe6, 0xbd]),
-	GAME_SPEED: new Buffer([0x99, 0xb0, 0xd9, 0x05]),
-	MOD_BLOCK_1: new Buffer([0x5c, 0xae, 0x27, 0x84]),
-	MOD_BLOCK_2: new Buffer([0xc8, 0xd1, 0x8c, 0x1b]),
-	MOD_BLOCK_3: new Buffer([0x44, 0x7f, 0xd4, 0xfe]),
-	MOD_BLOCK_4: new Buffer([0xbb, 0x5e, 0x30, 0x88]),
-	MOD_ID: new Buffer([0x54, 0x5f, 0xc4, 0x04]),
-	MOD_TITLE: new Buffer([0x72, 0xe1, 0x34, 0x30]),
-	MAP_FILE: new Buffer([0x5a, 0x87, 0xd8, 0x63]),
-	MAP_SIZE: new Buffer([0x40, 0x5c, 0x83, 0x0b]),
+	GAME_TURN: Buffer.from([0x9d, 0x2c, 0xe6, 0xbd]),
+	GAME_SPEED: Buffer.from([0x99, 0xb0, 0xd9, 0x05]),
+	MOD_BLOCK_1: Buffer.from([0x5c, 0xae, 0x27, 0x84]),
+	MOD_BLOCK_2: Buffer.from([0xc8, 0xd1, 0x8c, 0x1b]),
+	MOD_BLOCK_3: Buffer.from([0x44, 0x7f, 0xd4, 0xfe]),
+	MOD_BLOCK_4: Buffer.from([0xbb, 0x5e, 0x30, 0x88]),
+	MOD_ID: Buffer.from([0x54, 0x5f, 0xc4, 0x04]),
+	MOD_TITLE: Buffer.from([0x72, 0xe1, 0x34, 0x30]),
+	MAP_FILE: Buffer.from([0x5a, 0x87, 0xd8, 0x63]),
+	MAP_SIZE: Buffer.from([0x40, 0x5c, 0x83, 0x0b]),
 };
 
 const SLOT_HEADERS = [
-	new Buffer([0xc8, 0x9b, 0x5f, 0x65]),
-	new Buffer([0x5e, 0xab, 0x58, 0x12]),
-	new Buffer([0xe4, 0xfa, 0x51, 0x8b]),
-	new Buffer([0x72, 0xca, 0x56, 0xfc]),
-	new Buffer([0xd1, 0x5f, 0x32, 0x62]),
-	new Buffer([0x47, 0x6f, 0x35, 0x15]),
-	new Buffer([0xfd, 0x3e, 0x3c, 0x8c]),
-	new Buffer([0x6b, 0x0e, 0x3b, 0xfb]),
-	new Buffer([0xfa, 0x13, 0x84, 0x6b]),
-	new Buffer([0x6c, 0x23, 0x83, 0x1c]),
-	new Buffer([0xf4, 0x14, 0x18, 0xaa]),
-	new Buffer([0x62, 0x24, 0x1f, 0xdd]),
+	Buffer.from([0xc8, 0x9b, 0x5f, 0x65]),
+	Buffer.from([0x5e, 0xab, 0x58, 0x12]),
+	Buffer.from([0xe4, 0xfa, 0x51, 0x8b]),
+	Buffer.from([0x72, 0xca, 0x56, 0xfc]),
+	Buffer.from([0xd1, 0x5f, 0x32, 0x62]),
+	Buffer.from([0x47, 0x6f, 0x35, 0x15]),
+	Buffer.from([0xfd, 0x3e, 0x3c, 0x8c]),
+	Buffer.from([0x6b, 0x0e, 0x3b, 0xfb]),
+	Buffer.from([0xfa, 0x13, 0x84, 0x6b]),
+	Buffer.from([0x6c, 0x23, 0x83, 0x1c]),
+	Buffer.from([0xf4, 0x14, 0x18, 0xaa]),
+	Buffer.from([0x62, 0x24, 0x1f, 0xdd]),
 ];
 
 const ACTOR_DATA = {
-	ACTOR_NAME: new Buffer([0x2f, 0x5c, 0x5e, 0x9d]),
-	LEADER_NAME: new Buffer([0x5f, 0x5e, 0xcd, 0xe8]),
-	ACTOR_TYPE: new Buffer([0xbe, 0xab, 0x55, 0xca]),
-	PLAYER_NAME: new Buffer([0xfd, 0x6b, 0xb9, 0xda]),
-	PLAYER_PASSWORD: new Buffer([0x6c, 0xd1, 0x7c, 0x6e]),
-	PLAYER_ALIVE: new Buffer([0xa6, 0xdf, 0xa7, 0x62]),
-	IS_CURRENT_TURN: new Buffer([0xcb, 0x21, 0xb0, 0x7a]),
-	ACTOR_AI_HUMAN: new Buffer([0x95, 0xb9, 0x42, 0xce]), // 3 = Human, 1 = AI
-	ACTOR_DESCRIPTION: new Buffer([0x65, 0x19, 0x9b, 0xff]),
+	ACTOR_NAME: Buffer.from([0x2f, 0x5c, 0x5e, 0x9d]),
+	LEADER_NAME: Buffer.from([0x5f, 0x5e, 0xcd, 0xe8]),
+	ACTOR_TYPE: Buffer.from([0xbe, 0xab, 0x55, 0xca]),
+	PLAYER_NAME: Buffer.from([0xfd, 0x6b, 0xb9, 0xda]),
+	PLAYER_PASSWORD: Buffer.from([0x6c, 0xd1, 0x7c, 0x6e]),
+	PLAYER_ALIVE: Buffer.from([0xa6, 0xdf, 0xa7, 0x62]),
+	IS_CURRENT_TURN: Buffer.from([0xcb, 0x21, 0xb0, 0x7a]),
+	ACTOR_AI_HUMAN: Buffer.from([0x95, 0xb9, 0x42, 0xce]), // 3 = Human, 1 = AI
+	ACTOR_DESCRIPTION: Buffer.from([0x65, 0x19, 0x9b, 0xff]),
 };
 
 export const MARKERS = {
@@ -266,7 +266,7 @@ export function deleteMod(buffer, modid) {
 			if (id === modid) {
 				chunks.splice(i, 1);
 				chunks[1] = Buffer.concat([
-					new Buffer([chunks[1][0] - 1]),
+					Buffer.from([chunks[1][0] - 1]),
 					chunks[1].slice(1),
 				]);
 				break;
@@ -308,25 +308,7 @@ export function deleteChunk(chunks, toDelete) {
 	pull(chunks, toDelete.chunk);
 }
 
-//Console code
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
-	const argv = yargs(hideBin(process.argv)).parse();
-
-	if (!argv._.length) {
-		console.log("Please pass the filename as the argument to the script.");
-	} else {
-		const buffer = new Buffer(readFileSync(argv._[0]));
-		const result = parse(buffer, argv);
-		console.log(inspect(result.parsed, false, null));
-
-		if (argv.outputCompressed) {
-			writeFileSync(basename(argv._[0]) + ".bin", result.compressed);
-		}
-	}
-}
-
 // Helper functions
-
 function writeValue(marker, type, value) {
 	switch (type) {
 		case DATA_TYPES.INTEGER:
@@ -436,7 +418,7 @@ function parseEntry(buffer, state, dontSkip) {
 					if (
 						buffer
 							.slice(state.pos, state.pos + 4)
-							.equals(new Buffer([0, 0, 0, 0x80]))
+							.equals(Buffer.from([0, 0, 0, 0x80]))
 					) {
 						state.pos += 20;
 					} else {
@@ -481,13 +463,13 @@ function readString(buffer, state) {
 	// Length can be up to 3 bytes, but the 4th byte is a marker?
 	const strLenBuf = Buffer.concat([
 		buffer.slice(state.pos, state.pos + 3),
-		new Buffer([0]),
+		Buffer.from([0]),
 	]);
 	const strLen = strLenBuf.readUInt32LE(0);
 	state.pos += 2;
 
 	const strInfo = buffer.slice(state.pos, state.pos + 6);
-	// new Buffer([0, 0x21, 1, 0, 0, 0]))
+	// Buffer.from([0, 0x21, 1, 0, 0, 0]))
 	if (strInfo[1] === 0 || strInfo[1] === 0x20) {
 		state.pos += 10;
 		result = "Don't know what this kind of string is...";
@@ -540,7 +522,7 @@ function addElementToArray0B(chunks, markerValues) {
 	}
 
 	chunks[1] = Buffer.concat([
-		new Buffer([chunks[1][0] + 1]),
+		Buffer.from([chunks[1][0] + 1]),
 		chunks[1].slice(1),
 	]);
 	const cloneChunk = Buffer.from(chunks[2]);
@@ -613,15 +595,15 @@ function readArray0B(buffer, state) {
 
 function writeString(marker, newValue) {
 	const safeValue = encode(remove(newValue), "ascii");
-	const strLenBuffer = new Buffer([0, 0, 0, 0x21, 1, 0, 0, 0]);
+	const strLenBuffer = Buffer.from([0, 0, 0, 0x21, 1, 0, 0, 0]);
 	strLenBuffer.writeUInt16LE(safeValue.length + 1, 0);
 
 	return Buffer.concat([
 		marker,
-		new Buffer([5, 0, 0, 0]),
+		Buffer.from([5, 0, 0, 0]),
 		strLenBuffer,
 		Buffer.from(safeValue),
-		new Buffer([0]),
+		Buffer.from([0]),
 	]);
 }
 
@@ -635,7 +617,7 @@ function readUtfString(buffer, state) {
 	if (
 		buffer
 			.slice(state.pos, state.pos + 6)
-			.equals(new Buffer([0, 0x21, 2, 0, 0, 0]))
+			.equals(Buffer.from([0, 0x21, 2, 0, 0, 0]))
 	) {
 		state.pos += 6;
 		result = buffer
@@ -671,7 +653,7 @@ function writeInt(marker, value) {
 
 	return Buffer.concat([
 		marker,
-		new Buffer([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
+		Buffer.from([2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]),
 		valueBuffer,
 	]);
 }
@@ -682,7 +664,7 @@ function writeArrayLen(marker, value) {
 
 	return Buffer.concat([
 		marker,
-		new Buffer([0x0a, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0]),
+		Buffer.from([0x0a, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0]),
 		valueBuffer,
 	]);
 }
@@ -716,4 +698,67 @@ function readCompressedData(buffer, state) {
 	const compressedData = Buffer.concat(chunks);
 
 	return unzipSync(compressedData, { finishFlush: constants.Z_SYNC_FLUSH });
+}
+
+//Using console node
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+	const argv = yargs(hideBin(process.argv)).parse();
+
+	if (!argv._.length) {
+		console.log("Please pass the filename as the argument to the script.");
+	} else {
+		const buffer = Buffer.from(readFileSync(argv._[0]));
+		const result = parse(buffer, argv);
+		console.log(inspect(result.parsed, false, null));
+
+		if (argv.outputCompressed) {
+			writeFileSync(basename(argv._[0]) + ".bin", result.compressed);
+		}
+
+		if (argv.output) {
+			let gameState = {
+				speed: result.parsed.GAME_SPEED.data,
+				turns: result.parsed.GAME_TURN.data,
+				mapName: result.parsed.MAP_FILE.data,
+				mapSize: result.parsed.MAP_SIZE.data,
+			};
+			let civs = [];
+			let exapansions = [];
+
+			for (const civ of result.parsed.CIVS) {
+				civs.push({
+					civilization: civ.ACTOR_NAME.data,
+					leader: civ.LEADER_NAME.data,
+					playerName: civ.PLAYER_NAME?.data || "ai",
+				});
+			}
+
+			//Mods are a little buggy, for now we can't see the gamemodes
+			for (const mod of result.parsed.MOD_BLOCK_4.data) {
+				if (mod.MOD_TITLE.data.includes("EXPANSION"))
+					exapansions.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
+			}
+
+			writeFileSync(
+				`${basename(argv._[0])}_OUTPUT.json`,
+				JSON.stringify({
+					civs: civs,
+					gameState: gameState,
+					exapansions: exapansions,
+				})
+			);
+		}
+
+		// Mods/expanions are a little buggy still, this is a WIP
+		if (argv.mods) {
+			let mods = [];
+			for (const mod of result.parsed.MOD_BLOCK_2.data) {
+				mods.push({ mod: mod.MOD_TITLE.data.replace(/\W/g, "") });
+			}
+			writeFileSync(
+				`${basename(argv._[0])}_MODS.json`,
+				JSON.stringify(mods)
+			);
+		}
+	}
 }

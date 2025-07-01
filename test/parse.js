@@ -13,7 +13,7 @@ describe("Parse Cathy Save", () => {
 	];
 
 	for (const file of files) {
-		const buffer = new Buffer(readFileSync(file));
+		const buffer = Buffer.from(readFileSync(file));
 		const parsed = parse(buffer).parsed;
 		const parsedSimple = parse(buffer, { simple: true }).parsed;
 
@@ -78,7 +78,7 @@ describe("Parse Cathy Save", () => {
 });
 
 describe("Parse Hojo Save", () => {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/HŌJŌ TOKIMUNE 341 1920 d. C..Civ6Save")
 	);
 	const parsed = parse(buffer).parsed;
@@ -98,7 +98,7 @@ describe("Parse Hojo Save", () => {
 });
 
 describe("Parse 144", () => {
-	const buffer = new Buffer(readFileSync("test/saves/000144.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/000144.Civ6Save"));
 	const parsed = parse(buffer).parsed;
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
@@ -128,7 +128,7 @@ describe("Parse 144", () => {
 });
 
 describe("Parse 203 Save", () => {
-	const buffer = new Buffer(readFileSync("test/saves/000203.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/000203.Civ6Save"));
 	const parsed = parse(buffer).parsed;
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
@@ -146,7 +146,7 @@ describe("Parse 203 Save", () => {
 });
 
 describe("Parse 12 Peeps Save", () => {
-	const buffer = new Buffer(readFileSync("test/saves/12peeps.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/12peeps.Civ6Save"));
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
 	it("should have 12 civs", () => {
@@ -209,7 +209,7 @@ describe("Parse 12 Peeps Save", () => {
 });
 
 describe("Parse User Marker Bug Save", () => {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/UserMarkerBug.Civ6Save")
 	);
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
@@ -226,7 +226,7 @@ describe("Parse User Marker Bug Save", () => {
 });
 
 describe("Parse another file that broke things", () => {
-	const buffer = new Buffer(readFileSync("test/saves/000002.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/000002.Civ6Save"));
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
 	it("should have 6 civs", () => {
@@ -241,7 +241,7 @@ describe("Parse another file that broke things", () => {
 });
 
 describe("charlie is dead", () => {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/charlieisdead.Civ6Save")
 	);
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
@@ -258,7 +258,7 @@ describe("charlie is dead", () => {
 });
 
 describe("Parse save with 3 byte string length", () => {
-	const buffer = new Buffer(readFileSync("test/saves/000377.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/000377.Civ6Save"));
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
 	it("should have 10 civs", () => {
@@ -273,7 +273,7 @@ describe("Parse Outback Tycoon saves", () => {
 	];
 
 	for (const file of files) {
-		const buffer = new Buffer(readFileSync(file));
+		const buffer = Buffer.from(readFileSync(file));
 		const parsedSimple = parse(buffer, { simple: true }).parsed;
 
 		it(file + " should have 4 civs", () => {
@@ -283,7 +283,7 @@ describe("Parse Outback Tycoon saves", () => {
 });
 
 describe("Parse save file with empty slots", () => {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/emptycivslots.Civ6Save")
 	);
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
@@ -294,7 +294,7 @@ describe("Parse save file with empty slots", () => {
 });
 
 describe("Parse file with string longer than null terminator", () => {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/nullterminator.Civ6Save")
 	);
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
@@ -308,7 +308,7 @@ describe("Parse file with string longer than null terminator", () => {
 describe("Test decompression", () => {
 	it("should work with all save files", () => {
 		for (const save of readdirSync("test/saves")) {
-			const buffer = new Buffer(readFileSync("test/saves/" + save));
+			const buffer = Buffer.from(readFileSync("test/saves/" + save));
 			const parseFunc = () => parse(buffer, { outputCompressed: true });
 
 			expect(parseFunc, save).to.not.throw();
@@ -317,7 +317,7 @@ describe("Test decompression", () => {
 });
 
 describe("Apocalypse save", () => {
-	const buffer = new Buffer(readFileSync("test/saves/apocalypse.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/apocalypse.Civ6Save"));
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
 	it("should have 4 civs", () => {
@@ -326,7 +326,7 @@ describe("Apocalypse save", () => {
 });
 
 describe("Save that was triggering compressed data read", () => {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/JAYAVARMAN VII. 1 4000 v. Chr..Civ6Save")
 	);
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
@@ -337,7 +337,7 @@ describe("Save that was triggering compressed data read", () => {
 });
 
 describe("ignores ACTOR_AI_HUMAN = 2", () => {
-	const buffer = new Buffer(readFileSync("test/saves/civtype2.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/civtype2.Civ6Save"));
 	const parsedSimple = parse(buffer, { simple: true }).parsed;
 
 	it("should have 6 civs", () => {

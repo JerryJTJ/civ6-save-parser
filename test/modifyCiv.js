@@ -16,7 +16,7 @@ import {
 } from "../index.js";
 
 describe("Modify civtype2 save", function () {
-	const buffer = new Buffer(readFileSync("test/saves/civtype2.Civ6Save"));
+	const buffer = Buffer.from(readFileSync("test/saves/civtype2.Civ6Save"));
 	const data = parse(buffer);
 
 	it("should be able to add MPH mod", () => {
@@ -57,7 +57,7 @@ describe("Modify civtype2 save", function () {
 	});
 
 	it("should be able to add and remove MPH mod", () => {
-		const buffer = new Buffer(
+		const buffer = Buffer.from(
 			readFileSync("test/saves/CATHERINE DE MEDICI 1 4000 BC.Civ6Save")
 		);
 		const modid = "619ac86e-d99d-4bf3-b8f0-8c5b8c402176";
@@ -72,7 +72,7 @@ describe("Modify civtype2 save", function () {
 });
 
 describe("Modify Cathy Save", function () {
-	const buffer = new Buffer(
+	const buffer = Buffer.from(
 		readFileSync("test/saves/CATHERINE DE MEDICI 1 4000 BC.Civ6Save")
 	);
 	let data = parse(buffer);

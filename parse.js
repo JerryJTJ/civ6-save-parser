@@ -215,11 +215,11 @@ export function parse(buffer, options) {
 
 	//Options
 	if (options.simple) {
-		parsed = simplify(parsed);
+		return simplify(parsed);
 	}
 
 	if (options.clean) {
-		parsed = cleanse(parsed);
+		return cleanse(parsed);
 	}
 
 	return {

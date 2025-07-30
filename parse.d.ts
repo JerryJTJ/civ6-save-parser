@@ -1,6 +1,6 @@
 type Options = {
 	simple?: boolean;
-	clean?: boolean;
+	api?: boolean;
 	outputCompressed?: boolean;
 };
 

@@ -52,9 +52,9 @@ const SLOT_HEADERS = [
 ];
 
 const ACTOR_DATA = {
-	ACTOR_NAME: Buffer.from([0x2f, 0x5c, 0x5e, 0x9d]),
+	ACTOR_NAME: Buffer.from([0x2f, 0x5c, 0x5e, 0x9d]), //civ name
 	LEADER_NAME: Buffer.from([0x5f, 0x5e, 0xcd, 0xe8]),
-	ACTOR_TYPE: Buffer.from([0xbe, 0xab, 0x55, 0xca]),
+	ACTOR_TYPE: Buffer.from([0xbe, 0xab, 0x55, 0xca]), //civ, city-state, etc.
 	PLAYER_NAME: Buffer.from([0xfd, 0x6b, 0xb9, 0xda]),
 	PLAYER_PASSWORD: Buffer.from([0x6c, 0xd1, 0x7c, 0x6e]),
 	PLAYER_ALIVE: Buffer.from([0xa6, 0xdf, 0xa7, 0x62]),
@@ -215,7 +215,7 @@ export function parse(buffer, options) {
 
 	//Options
 	if (options.simple) {
-		return simplify(parsed);
+		parsed = simplify(parsed);
 	}
 
 	if (options.clean) {
@@ -361,20 +361,25 @@ function cleanse(parsed) {
 			civilization: civ.ACTOR_NAME.data,
 			leader: civ.LEADER_NAME.data,
 			playerName: civ.PLAYER_NAME?.data || "ai",
+			isHuman: civ.ACTOR_AI_HUMAN === 3 ? true : false,
 		});
 	}
 
+	// DLC
+	// Only barbarian gamemode is seprate, the rest is attatched to a frontier-pass pack so not sure how to find it
 	let exapansions = [];
-	//DLCs only (game modes don't seem to appear?)
+	let mods = [];
 	for (const mod of parsed.MOD_BLOCK_4.data) {
 		if (mod.MOD_TITLE.data.includes("EXPANSION"))
 			exapansions.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
+		else mods.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
 	}
 
 	return {
 		gameState: gameState,
 		civs: civs,
 		exapansions: exapansions,
+		mods: mods,
 	};
 }
 

@@ -369,11 +369,11 @@ function api(parsed) {
 	// Only barbarian gamemode is seprate, the rest is attatched to a frontier-pass pack so not sure how to find it
 	let exapansions = [];
 	// let mods = [];
-	// for (const mod of parsed.MOD_BLOCK_4.data) {
-	// 	if (mod.MOD_TITLE.data.includes("EXPANSION"))
-	// 		exapansions.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
-	// 	else mods.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
-	// }
+	for (const mod of parsed.MOD_BLOCK_4.data) {
+		if (mod.MOD_TITLE.data.includes("EXPANSION"))
+			exapansions.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
+		// else mods.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
+	}
 
 	return {
 		gameState: gameState,

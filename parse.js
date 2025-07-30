@@ -218,8 +218,8 @@ export function parse(buffer, options) {
 		parsed = simplify(parsed);
 	}
 
-	if (options.clean) {
-		return cleanse(parsed);
+	if (options.api) {
+		return api(parsed);
 	}
 
 	return {
@@ -347,7 +347,7 @@ function simplify(result) {
 	});
 }
 
-function cleanse(parsed) {
+function api(parsed) {
 	const gameState = {
 		speed: parsed.GAME_SPEED.data,
 		turns: parsed.GAME_TURN.data,

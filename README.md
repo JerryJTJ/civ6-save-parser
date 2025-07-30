@@ -8,7 +8,7 @@ Usage: `node index.js filename.Civ6Save [OPTIONS]`
 
 -   **--outputCompressed**: Writes the compressed payload to the working directory.
 -   **--simple**: Just outputs the parsed information, no metadata.
--   **--clean**: Outputs the very basic information in a JSON format.
+-   **--api**: Outputs save file information used for APIs.
 
 ## Tests
 

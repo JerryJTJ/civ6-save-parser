@@ -351,7 +351,7 @@ function api(parsed) {
 	const gameState = {
 		speed: parsed.GAME_SPEED.data,
 		turns: parsed.GAME_TURN.data,
-		mapName:
+		map:
 			parsed.MAP_FILE.data.substring(
 				0,
 				parsed.MAP_FILE.data.lastIndexOf(".")
@@ -359,32 +359,33 @@ function api(parsed) {
 		mapSize: parsed.MAP_SIZE.data,
 	};
 
-	let civs = [];
+	let players = [];
 	for (const civ of parsed.CIVS) {
-		civs.push({
-			civilization: civ.ACTOR_NAME.data,
+		players.push({
 			leader: civ.LEADER_NAME.data,
-			playerName: civ.PLAYER_NAME?.data || "ai",
-			isHuman: civ.ACTOR_AI_HUMAN === 3 ? true : false,
+			isHuman: civ.ACTOR_AI_HUMAN.data === 3,
+			...(civ.ACTOR_AI_HUMAN.data === 3
+				? { name: civ.PLAYER_NAME?.data }
+				: {}),
 		});
 	}
 
 	// DLC
 	// Only barbarian gamemode is seprate, the rest is attatched to a frontier-pass pack so not sure how to find it
-	let exapansions = [];
+	let expansions = [];
 	// let mods = [];
 	if (parsed.MOD_BLOCK_1) {
 		for (const mod of parsed.MOD_BLOCK_1.data) {
 			if (mod.MOD_TITLE.data.includes("EXPANSION"))
-				exapansions.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
+				expansions.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
 			// else mods.push(mod.MOD_TITLE.data.replace(/\W/g, ""));
 		}
 	}
 
 	return {
-		gameState: gameState,
-		civs: civs,
-		exapansions: exapansions,
+		...gameState,
+		players: players,
+		expansions: expansions,
 		// mods: mods,
 	};
 }

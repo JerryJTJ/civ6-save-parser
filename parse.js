@@ -351,11 +351,7 @@ function api(parsed) {
 	const gameState = {
 		speed: parsed.GAME_SPEED.data,
 		turns: parsed.GAME_TURN.data,
-		map:
-			parsed.MAP_FILE.data.substring(
-				0,
-				parsed.MAP_FILE.data.lastIndexOf(".")
-			) || parsed.MAP_FILE.data,
+		map: parsed.MAP_FILE.data,
 		mapSize: parsed.MAP_SIZE.data,
 	};
 
